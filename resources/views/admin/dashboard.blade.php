@@ -1,3 +1,3 @@
 <x-admin-layout>
-    Hola mundo
+    Hola mundo Probando
 </x-admin-layout>
