@@ -1,3 +1,7 @@
+@props(['breadcrumb' => []])
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,19 +32,21 @@
 }"
 class="sm:overflow-auto">
 
+
     @include('layouts.includes.admin.navigation')
 
     @include('layouts.includes.admin.sidebar')
 
 
+    <div class="mt-14">
+        <div class="p-4 sm:ml-64">
+            @include('layouts.includes.admin.breadcrumb')
+                <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 ">
 
-<div class="p-4 sm:ml-64">
-   <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
-
-    {{$slot}}
-   </div>
-
-</div>
+                {{$slot}}
+                </div>
+        </div>
+    </div>
 
 <div x-cloak
     x-show="open"
