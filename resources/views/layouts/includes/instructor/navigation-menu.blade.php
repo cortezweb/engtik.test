@@ -8,8 +8,6 @@
 ];
 @endphp
 
-
-
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -17,7 +15,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    <a href="{{'/'}}">
                         <x-application-mark class="block h-9 w-auto" />
                     </a>
                 </div>
@@ -39,6 +37,7 @@
 
                 <!-- Settings Dropdown -->
                 <div class="ms-3 relative">
+
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
                             @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
@@ -56,6 +55,7 @@
                                     </button>
                                 </span>
                             @endif
+
                         </x-slot>
 
                         <x-slot name="content">
@@ -82,6 +82,7 @@
                             </form>
                         </x-slot>
                     </x-dropdown>
+
                 </div>
             </div>
 
@@ -109,6 +110,7 @@
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
+
             <div class="flex items-center px-4">
                 @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
                     <div class="shrink-0 me-3">
