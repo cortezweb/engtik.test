@@ -29,6 +29,7 @@ return new class extends Migration
 
             $table->text('observation')->nullable();
 
+            $table->foreignId('user_id')->constrained();
             $table->foreignId('category_id')->constrained();
             $table->foreignId('level_id')->constrained();
             $table->foreignId('price_id')->constrained();
