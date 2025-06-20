@@ -7,15 +7,15 @@
     </x-slot>
 
 
-    <x-container class="mt-12">
-    <div class="md:flex md:justify-end">
+<x-container class="mt-12">
+    <div class="md:flex md:justify-end mb-4">
         <a href="{{route('instructor.courses.create')}}" class="btn btn-red block w-full md:w-auto text-center">
             Crear Curso
         </a>
     </div>
 
     <ul>
-        @foreach ($courses as $course)
+        @forelse ($courses as $course)
 
         <li class="bg-white rounded-lg shadow-lg overflow-hidden mb-2">
             <a href="{{ route('instructor.courses.edit', $course)}}" class="md:flex">
@@ -99,9 +99,20 @@
             </div>
 
         </li>
-        @endforeach
+
+        @empty
+        <li class="bg-white rounded-lg shadow-lg overflow-hidden mb-2">
+            <div class="flex justify-between items-center p-4">
+                <p class="text-gray-500 text-center">No tienes cursos creados</p>
+
+                <a href="{{route('instructor.courses.create')}}" class="btn btn-blue block w-full md:w-auto text-center">
+                    Crea tu curso
+                </a>
+            </div>
+
+        @endforelse
     </ul>
-    </x-container>
+</x-container>
 
 
 
