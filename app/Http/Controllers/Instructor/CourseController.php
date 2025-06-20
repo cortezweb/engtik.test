@@ -7,7 +7,8 @@ use App\Models\category;
 use App\Models\Course;
 use App\Models\level;
 use App\Models\price;
-use app\Models\User;
+use App\Models\User;
+
 use Illuminate\Http\Request;
 
 class CourseController extends Controller
@@ -17,7 +18,9 @@ class CourseController extends Controller
      */
     public function index()
     {
-        return view('instructor.courses.index');
+        $courses =  Course::where('user_id', auth()->id())->get();
+
+        return view('instructor.courses.index', compact('courses'));
     }
 
     /**
