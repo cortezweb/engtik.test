@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Instructor;
 
 use App\Http\Controllers\Controller;
+use App\Models\category;
 use App\Models\Course;
+use App\Models\level;
+use App\Models\price;
+use app\Models\User;
 use Illuminate\Http\Request;
 
 class CourseController extends Controller
@@ -21,7 +25,11 @@ class CourseController extends Controller
      */
     public function create()
     {
-        //
+        $categories = category::all();
+        $levels = level::all();
+        $prices = price::all();
+
+        return view('instructor.courses.create', compact('categories', 'levels', 'prices'));
     }
 
     /**
@@ -29,7 +37,22 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'title' => 'required',
+            'slug' => 'required|unique:courses',
+            'category_id' => 'required|exists:categories,id',
+            'level_id' => 'required|exists:levels,id',
+            'price_id' => 'required|exists:prices,id',
+        ]);
+
+
+        $data['user_id'] = auth()->id();
+        // Assuming the instructor is the authenticated user
+
+       $course = Course::create($data);
+
+       return redirect()->route('instructor.courses.edit', $course);
+        // Here you would typically validate the request and create a new course.
     }
 
     /**
