@@ -24,10 +24,12 @@ class Course extends Model
         'category_id',
         'level_id',
         'price_id',
+        'published_at',
 ];
 
 protected $casts = [
         'status' => CourseStatus::class,
+        'published_at' => 'datetime',
     ];
 protected function image(): Attribute
 {

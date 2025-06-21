@@ -71,7 +71,15 @@ class CourseController extends Controller
      */
     public function edit(Course $course)
     {
-        //
+
+        $categories = category::all();
+        $levels = level::all();
+        $prices = price::all();
+        // Ensure the course belongs to the authenticated user
+
+
+
+        return view('instructor.courses.edit', compact('course', 'categories', 'levels', 'prices'));
     }
 
     /**
