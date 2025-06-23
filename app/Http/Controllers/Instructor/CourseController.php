@@ -120,4 +120,18 @@ class CourseController extends Controller
     {
         //
     }
+
+
+    public function video(Course $course)
+    {
+        // Ensure the course belongs to the authenticated user
+        if ($course->user_id !== auth()->id()) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        return view('instructor.courses.video', compact('course'));
+    }
+
+
+
 }
