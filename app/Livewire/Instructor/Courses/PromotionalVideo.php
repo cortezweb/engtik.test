@@ -21,6 +21,10 @@ class PromotionalVideo extends Component
 
         $this->course->video_path = $this->video->store('courses/promotional-videos');
         $this->course->save();
+
+        /* return redirect()->route('instructor.courses.video', $this->course); */
+
+        return $this->redirectRoute('instructor.courses.video', $this->course, true, true);
       
     }
 
