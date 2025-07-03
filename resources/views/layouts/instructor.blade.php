@@ -50,6 +50,23 @@
 
         @livewireScripts
 
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <script>
+            Livewire.on('swal', data => {
+                Swal.fire(data[0]);
+
+            //     Swal.fire({
+            // title: "The Internet?",
+            // text: "That thing is still around?",
+            // icon: "question"
+            //});
+
+    });
+
+
+        </script>
+
         @stack('js')
 
 

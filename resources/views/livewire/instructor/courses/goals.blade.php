@@ -1,6 +1,6 @@
 <div>
 
-    <ul class="space-y-4 mb-6">
+    <ul class="space-y-4 mb-4">
         @foreach ($goals as $index => $goal)
         <li wire:key="goal-{{$goal['id']}}">
             <x-input wire:model="goals.{{$index}}.name" class="w-full"/>
@@ -8,6 +8,14 @@
 
         @endforeach
     </ul>
+
+
+    <div class="flex justify-end mb-8">
+        <x-button wire:click="update">
+            Actualizar
+        </x-button>
+
+    </div>
 
 
     <form wire:submit="store">

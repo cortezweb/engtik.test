@@ -29,13 +29,34 @@ class Goals extends Component
             'name' => $this->name,
         ]);
 
-        $this->reset('name');
-
         $this->goals = Goal::where('course_id', $this->course->id)->get()->toArray();
 
-
-        session()->flash('message', 'Meta del curso creada exitosamente.');
+        $this->reset('name');
     }
+
+
+    public function update()
+    {
+        $this->validate([
+            'goals.*.name' => 'required|string|max:255',
+        ]);
+
+        foreach ($this->goals as $goal) {
+            Goal::find($goal['id'])->update([
+                'name' => $goal['name']
+            ]);
+        }
+
+        $this->dispatch('swal', [
+            'icon' => 'success',
+            'title' => 'Metas actualizadas correctamente',
+            'text' => 'Las metas del curso han sido actualizadas exitosamente.'
+        ]);
+
+    }
+
+
+
 
     public function render()
     {
