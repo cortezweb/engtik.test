@@ -12,6 +12,12 @@
         'url' => route('instructor.courses.video', $course),
         'active' => request()->routeIs('instructor.courses.video', $course),
         ],
+        [
+        'name' => 'Metas del curso',
+        'url' => route('instructor.courses.goals', $course),
+        'active' => request()->routeIs('instructor.courses.goals', $course),
+        ],
+
         // Add more links as needed
     ];
 @endphp
