@@ -18,8 +18,9 @@ class Goals extends Component
 
     public function mount()
     {
-        $this->goals = Goal::where('course_id', $this->course->id)->get()->toArray();
-    }
+        $this->goals = Goal::where('course_id', $this->course->id)
+        ->orderBy('position','asc')
+        ->get()->toArray();    }
 
 
     public function store(){
@@ -29,7 +30,9 @@ class Goals extends Component
             'name' => $this->name,
         ]);
 
-        $this->goals = Goal::where('course_id', $this->course->id)->get()->toArray();
+        $this->goals = Goal::where('course_id', $this->course->id)
+        ->orderBy('position','asc')
+        ->get()->toArray();
 
         $this->reset('name');
     }
@@ -60,11 +63,24 @@ class Goals extends Component
     {
         Goal::find($goalId)->delete();
 
-        $this->goals = Goal::where('course_id', $this->course->id)->get()->toArray();
+        $this->goals = Goal::where('course_id', $this->course->id)
+                    ->orderBy('position','asc')
+                    ->get()->toArray();
 
 
     }
 
+    public function sortgoals($data){
+        foreach ($data as $index => $goalId) {
+            Goal::find($goalId)->update([
+                'position' => $index + 1
+            ]);
+        }
+
+        $this->goals = Goal::where('course_id', $this->course->id)
+        ->orderBy('position','asc')
+        ->get()->toArray();
+    }
 
 
     public function render()
@@ -72,4 +88,3 @@ class Goals extends Component
         return view('livewire.instructor.courses.goals');
     }
 }
-
