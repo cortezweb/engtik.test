@@ -26,6 +26,12 @@
         'active' => request()->routeIs('instructor.courses.requirements', $course),
         ],
 
+        [
+        'name' => 'Curriculum del curso',
+        'url' => route('instructor.courses.curriculum', $course),
+        'active' => request()->routeIs('instructor.courses.curriculum', $course),
+        ],
+
 
 
         // Add more links as needed
