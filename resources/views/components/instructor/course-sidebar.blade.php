@@ -7,16 +7,26 @@
         'url' => route('instructor.courses.edit', $course),
         'active' => request()->routeIs('instructor.courses.edit', $course),
         ],
+
         [
         'name' => 'Video promocional',
         'url' => route('instructor.courses.video', $course),
         'active' => request()->routeIs('instructor.courses.video', $course),
         ],
+
         [
         'name' => 'Metas del curso',
         'url' => route('instructor.courses.goals', $course),
         'active' => request()->routeIs('instructor.courses.goals', $course),
         ],
+
+        [
+        'name' => 'Requisitos del curso',
+        'url' => route('instructor.courses.requirements', $course),
+        'active' => request()->routeIs('instructor.courses.requirements', $course),
+        ],
+
+
 
         // Add more links as needed
     ];

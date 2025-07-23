@@ -63,11 +63,17 @@ protected function image(): Attribute
         return $this->belongsTo(Price::class);
     }
 
-    //Relacion uno a muchos 
-    
+    //Relacion uno a muchos
+
     public function goals()
     {
         return $this->hasMany(Goal::class);
     }
+
+    public function requirements()
+    {
+        return $this->hasMany(Requirement::class);
+    }
+
 
 }

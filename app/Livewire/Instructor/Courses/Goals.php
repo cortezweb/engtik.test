@@ -71,6 +71,7 @@ class Goals extends Component
     }
 
     public function sortgoals($data){
+
         foreach ($data as $index => $goalId) {
             Goal::find($goalId)->update([
                 'position' => $index + 1
@@ -81,6 +82,8 @@ class Goals extends Component
         ->orderBy('position','asc')
         ->get()->toArray();
     }
+
+    
 
 
     public function render()

@@ -2,15 +2,14 @@
 
 namespace App\Models;
 
-use App\Observers\GoalObserver;
+use App\Observers\RequirementObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 
-#[ObservedBy([GoalObserver::class])]
 
+#[ObservedBy([RequirementObserver::class])]
 
-class Goal extends Model
-
+class Requirement extends Model
 {
     protected $fillable = [
         'name',
