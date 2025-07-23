@@ -8,6 +8,7 @@
 
     <x-instructor.course-sidebar :course="$course">
 
+        @livewire('instructor.courses.manage-sections', ['course' => $course], key('manage-sections' . $course->id))
 
     </x-instructor.course-sidebar>
 
