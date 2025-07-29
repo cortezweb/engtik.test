@@ -14,9 +14,19 @@ class ManageSections extends Component
 
     public $sections;
 
+    public $sectionEdit = [
+        'id' => null,
+        'name' => null,
+    ];
+
     public function mount($course)
     {
-       $this->sections = Section::where('course_id', $this->course->id)
+        $this->getSections();
+    }
+
+    public function getSections()
+    {
+        $this->sections = Section::where('course_id', $this->course->id)
        ->orderBy('position', 'asc' )
        ->get();
     }
@@ -37,6 +47,28 @@ class ManageSections extends Component
         $this->reset('name');
     }
 
+    public function edit(Section $section )
+    {
+       $this->sectionEdit = [
+        'id'=>$section->id,
+        'name'=>$section->name,
+       ];
+    }
+
+    public function update()
+    {
+        $this->validate([
+            'sectionEdit.name' => 'required|string|max:255',
+        ]);
+
+        Section::find($this->sectionEdit['id'])->update([
+            'name' => $this->sectionEdit['name'],
+        ]);
+
+        $this->reset('sectionEdit');
+
+        $this->getSections();
+    }
 
     public function render()
     {
