@@ -29,6 +29,8 @@ class ManageSections extends Component
         $this->sections = Section::where('course_id', $this->course->id)
        ->orderBy('position', 'asc' )
        ->get();
+
+
     }
 
 
@@ -45,6 +47,8 @@ class ManageSections extends Component
         ]);
 
         $this->reset('name');
+
+        $this->getSections();
     }
 
     public function edit(Section $section )
@@ -70,6 +74,20 @@ class ManageSections extends Component
         $this->getSections();
     }
 
+
+    public function destroy(Section $section)
+    {
+        $section->delete();
+        $this->getSections();
+
+
+        $this->dispatch('swal', [
+            "icon" => "success",
+            "title" => "Eliminado!",
+            "text" => "Section eliminada correctamente",
+        ]);
+
+    }
     public function render()
     {
         return view('livewire.instructor.courses.manage-sections');
