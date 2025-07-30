@@ -8,6 +8,8 @@ class SectionObserver
 {
     public function creating($section)
     {
-        $section->position = Section::where('course_id', $section->course_id)->max('position') + 1;
+        if (!$section->position) {
+            $section->position = Section::where('course_id', $section->course_id)->max('position') + 1;
+        }
     }
 }
