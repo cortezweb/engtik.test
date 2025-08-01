@@ -3,6 +3,7 @@
 namespace App\Livewire\Instructor\Courses;
 
 use App\Models\Lesson;
+use App\Rules\UniqueLessonCourse;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -31,7 +32,7 @@ class ManageLessons extends Component
     public function rules()
     {
         $rules = [
-            'lessonCreate.name' => 'required',
+            'lessonCreate.name' => ['required', new UniqueLessonCourse($this->section->course_id)],
             'lessonCreate.platform' => 'required', // 1 for local, 2 for external
         ];
 
