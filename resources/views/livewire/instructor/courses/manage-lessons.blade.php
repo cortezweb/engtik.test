@@ -1,9 +1,50 @@
 <div>
+
+    <div class="mb-6">
+
+        <ul class="space-y-4">
+            @foreach ($lessons as $lesson)
+
+                <li wire:key="lesson-{{ $lesson->id }}">
+                    <div class="bg-white rounded-lg shadow-lg px-6 py-4">
+                        <div class="md:flex md:items-center">
+
+                            <h1 class="md:flex-1 truncate cursor-move">
+                            <i class="fas fa-play-circle text-blue-500"></i>
+                                {{ $lesson->name }}
+                            </h1>
+
+
+                        <div class="space-x-3 md:shrink-0 md:ml-4">
+                            <button>
+                                <i class="fas fa-edit hover:text-indigo-600"></i>
+                            </button>
+
+                            <button>
+                                <i class="fas fa-trash-alt hover:text-red-600"></i>
+                            </button>
+
+                            <button>
+                                <i class="fas fa-chevron-down hover:text-blue-600"></i>
+                            </button>
+                        </div>
+                        </div>
+                    </div>
+                </li>
+            @endforeach
+
+        </ul>
+    </div>
+
+
+
+    {{-- Creacion --}}
+
     <div x-data="
-    {
-    open: @entangle('lessonCreate.open'),
-    platform: @entangle('lessonCreate.platform'),
-    }">
+        {
+        open: @entangle('lessonCreate.open'),
+        platform: @entangle('lessonCreate.platform'),
+        }">
 
         <div x-on:click="open = !open"
             class="h-6 w-12 -ml-4 bg-indigo-200 hover:bg-indigo-300 flex items-center justify-center cursor-pointer"
