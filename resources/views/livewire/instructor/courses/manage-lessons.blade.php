@@ -7,6 +7,38 @@
 
                 <li wire:key="lesson-{{ $lesson->id }}">
                     <div class="bg-white rounded-lg shadow-lg px-6 py-4">
+                       @if ($lessonEdit['id'] == $lesson->id)
+
+                        <form wire:submit="update">
+                            <div class="flex items-center space-x-2">
+                                <x-label>
+                                    Lección:
+                                </x-label>
+
+                                    <x-input wire:model="lessonEdit.name" class="flex-1"/>
+                            </div>
+
+                            <div class="flex justify-end mt-4">
+                                <div class="space-x-2">
+                                    <x-danger-button wire:click="$set('lessonEdit.id', null)">
+                                        Cancelar
+                                    </x-danger-button>
+
+                                    <x-button class="ml-2">
+                                        Actualizar
+                                    </x-button>
+                                </div>
+
+
+
+                            </div>
+
+                        </form>
+
+                       @else
+
+
+
                         <div class="md:flex md:items-center">
 
                             <h1 class="md:flex-1 truncate cursor-move">
@@ -15,20 +47,22 @@
                             </h1>
 
 
-                        <div class="space-x-3 md:shrink-0 md:ml-4">
-                            <button>
-                                <i class="fas fa-edit hover:text-indigo-600"></i>
-                            </button>
+                            <div class="space-x-3 md:shrink-0 md:ml-4">
+                                    <button wire:click="edit({{$lesson->id}})">
+                                        <i class="fas fa-edit hover:text-indigo-600"></i>
+                                    </button>
 
-                            <button>
-                                <i class="fas fa-trash-alt hover:text-red-600"></i>
-                            </button>
+                                    <button>
+                                        <i class="fas fa-trash-alt hover:text-red-600"></i>
+                                    </button>
 
-                            <button>
-                                <i class="fas fa-chevron-down hover:text-blue-600"></i>
-                            </button>
+                                    <button>
+                                        <i class="fas fa-chevron-down hover:text-blue-600"></i>
+                                    </button>
+                            </div>
                         </div>
-                        </div>
+
+                        @endif
                     </div>
                 </li>
             @endforeach

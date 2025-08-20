@@ -12,9 +12,11 @@ class UniqueLessonCourse implements ValidationRule
 {
     public $courseId;
 
+
     public function __construct($courseId)
     {
         $this->courseId = $courseId;
+
     }
 
 
