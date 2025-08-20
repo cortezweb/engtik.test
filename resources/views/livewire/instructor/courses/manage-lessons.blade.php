@@ -1,6 +1,30 @@
 <div>
 
-    <div class="mb-6">
+    <div x-data="{
+        destroyLesson(lessonId) {
+                Swal.fire({
+            title: 'Estas Seguro?',
+            text: 'No podras revertir esto!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '¡Si, borralo!',
+            cancelButtonText: 'Cancelar'
+            }).then((result) => {
+            if (result.isConfirmed) {
+
+                @this.call('destroy', lessonId);
+            }
+            });
+
+        }
+
+
+
+    }"
+
+    class="mb-6">
 
         <ul class="space-y-4">
             @foreach ($lessons as $lesson)
@@ -52,7 +76,7 @@
                                         <i class="fas fa-edit hover:text-indigo-600"></i>
                                     </button>
 
-                                    <button>
+                                    <button x-on:click="destroyLesson({{$lesson->id}})">
                                         <i class="fas fa-trash-alt hover:text-red-600"></i>
                                     </button>
 

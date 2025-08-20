@@ -109,6 +109,14 @@ class ManageLessons extends Component
         $this->getLessons();
     }
 
+    public function destroy($lessonId){
+
+        $lesson = Lesson::find($lessonId);
+        $lesson->delete();
+
+        $this->getLessons();
+    }
+
     #[On('uploadVideo')]
     public function uploadVideo($lessonId)
     {
