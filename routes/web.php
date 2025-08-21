@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Course;
 use App\Models\Lesson;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
@@ -13,7 +14,18 @@ Route::get('/', function () {
 
 Route::get('prueba', function(){
 
+    $course = Course::first();
 
+    $sections = $course->sections()
+            ->with(['lessons' => function ($query){
+                $query->orderBy('position', 'asc');
+            }])
+            ->get();
 
+    $orderLessons = $sections->pluck('lessons')
+            ->collapse()
+            ->pluck('id');
+
+    return $orderLessons->search(6) + 1;
 
 });

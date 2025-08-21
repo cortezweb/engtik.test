@@ -53,17 +53,15 @@
 
                     @if ($sectionEdit['id'] == $section->id)
                         @include('instructor.sections.edit')
-
                     @else
-
                         @include('instructor.sections.show')
-
                         @endif
 
                     <div class="mt-4">
                         @livewire('instructor.courses.manage-lessons',
                         ['section' => $section,
-                        'lessons' => $section->lessons
+                        'lessons' => $section->lessons,
+                        'orderLessons' => $orderLessons
                         ], key('section-lessons-'.$section->id))
                     </div>
 

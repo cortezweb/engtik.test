@@ -9,9 +9,7 @@ class ManageSections extends Component
 {
 
     public $course;
-
     public $name;
-
     public $sections;
 
     public $sectionEdit = [
@@ -23,7 +21,9 @@ class ManageSections extends Component
 
     ];
 
-    public function mount($course)
+    public $orderLessons;
+
+    public function mount()
     {
         $this->getSections();
     }
@@ -31,11 +31,16 @@ class ManageSections extends Component
     public function getSections()
     {
         $this->sections = Section::where('course_id', $this->course->id)
-        ->with('lessons')
+        ->with(['lessons' => function ($query){
+            $query->orderBy('position', 'asc');
+        }])
         ->orderBy('position', 'asc' )
         ->get();
 
-
+    $this->orderLessons = $this->sections
+        ->pluck('lessons')
+        ->collapse()
+        ->pluck('id');
     }
 
     public function store()
