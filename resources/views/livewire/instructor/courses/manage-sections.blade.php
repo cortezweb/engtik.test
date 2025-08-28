@@ -34,9 +34,6 @@
             });
 
 "
-
-
-
 >
     {{--Listar Section--}}
     @if ($sections->count())
@@ -62,7 +59,7 @@
                         ['section' => $section,
                         'lessons' => $section->lessons,
                         'orderLessons' => $orderLessons
-                        ], key('section-lessons-'.$section->id . '-' . $orderLessons->join('-')))
+                        ], key('section-'. $section->id . '-position-' . $loop->iteration . '-' . $orderLessons->join('-')))
                     </div>
 
                 </div>

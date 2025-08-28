@@ -17,19 +17,35 @@
                 @this.call('destroy', lessonId);
             }
             });
-
         }
 
-
-
     }"
+    x-init="
+    new Sortable($refs.lessons, {
+                group: 'lessons',
+                animation: 150,
+                handle: '.handle-lesson',
+                ghostClass: 'blue-background-class',
+                store: {
+                    set: (sortable) => {
+
+                       Livewire.dispatch('sortLessons',
+                       {
+                        sorts: sortable.toArray(),
+                        sectionId: {{$section->id}}
+                       })
+                    }
+                }
+            });"
 
     class="mb-6">
 
-        <ul class="space-y-4">
+        <ul class="space-y-4" x-ref="lessons">
+            {{-- Listar Lecciones --}}
             @foreach ($lessons as $lesson)
 
-                <li wire:key="lesson-{{ $lesson->id }}">
+                <li wire:key="lesson-{{ $lesson->id }}" data-id="{{$lesson->id}}">
+                    {{-- Editar y Mostrar Lecciones --}}
                     <div class="bg-white rounded-lg shadow-lg px-6 py-4">
                        @if ($lessonEdit['id'] == $lesson->id)
 
@@ -63,7 +79,7 @@
 
                         <div class="md:flex md:items-center">
 
-                            <h1 class="md:flex-1 truncate cursor-move">
+                            <h1 class="md:flex-1 truncate cursor-move handle-lesson">
                             <i class="fas fa-play-circle text-blue-500"></i>
                             Lección {{$orderLessons->search($lesson->id) + 1}}:
                             {{$lesson->name }}
