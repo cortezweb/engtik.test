@@ -62,7 +62,7 @@
                         ['section' => $section,
                         'lessons' => $section->lessons,
                         'orderLessons' => $orderLessons
-                        ], key('section-lessons-'.$section->id))
+                        ], key('section-lessons-'.$section->id . '-' . $orderLessons->join('-')))
                     </div>
 
                 </div>

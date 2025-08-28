@@ -3,6 +3,7 @@
 namespace App\Livewire\Instructor\Courses;
 
 use App\Models\Section;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class ManageSections extends Component
@@ -28,6 +29,7 @@ class ManageSections extends Component
         $this->getSections();
     }
 
+    #[On('refreshOrderLessons')]
     public function getSections()
     {
         $this->sections = Section::where('course_id', $this->course->id)
