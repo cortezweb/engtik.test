@@ -4,8 +4,9 @@ namespace App\Models;
 
 use App\Observers\LessonObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Support\Facades\Storage;
 
 #[ObservedBy([LessonObserver::class])]
 
@@ -32,11 +33,27 @@ class Lesson extends Model
         'is_preview' => 'boolean',
         'is_processed' => 'boolean',
     ];
+
+
+    public function image(): Attribute
+        {
+            return new attribute(
+                get: function(){
+                    if ($this->platform == 1) {
+                        return Storage::url($this->image_path);
+                    }
+
+                    return $this->image_path;
+                }
+            );
+        }
+
+
     //relacion uno a muchos inversa
     public function section()
     {
         return $this->belongsTo(Section::class);
     }
 
-   
+
 }

@@ -78,7 +78,7 @@
                        @else
 
                         <div x-data="{
-                            open: false
+                            open: true
                         }">
                             <div class="md:flex md:items-center">
 
