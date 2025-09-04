@@ -137,6 +137,8 @@ class ManageLessons extends Component
         $this->reset('video');
     }
 
+    
+
     public function render()
     {
         return view('livewire.instructor.courses.manage-lessons');

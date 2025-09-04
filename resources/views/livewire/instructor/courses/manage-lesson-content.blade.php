@@ -1,9 +1,69 @@
 <div>
     {{-- Video --}}
     @if ($editVideo)
-        <div>
-            Estar por editar el video
+        <div x-data="{
+            platform: @entangle('platform'),
+        }">
+            <div class="md:flex md:items-center md:space-x-4 mb-2 space-y-4 md:space-y-0">
+                <div class="md:flex md:items-center md:space-x-4 space-y-4 md:space-y-0">
+                    <button type="button"
+                    class="inline-flex flex-col justify-center items-center w-full md:w-20 h-24 border rounded"
+                    :class="platform == 1 ? 'border-indigo-500 text-indigo-500' : 'border-gray-300'"
+                    x-on:click="platform = 1">
+                        <i class="fas fa-video text-2xl"></i>
+                        <span class="text-sm mt-2">
+                            Video
+                        </span>
+                    </button>
+
+                    <button type="button"
+                    class="inline-flex flex-col justify-center items-center w-full md:w-20 h-24 border rounded"
+                    :class="platform == 2 ? 'border-indigo-500 text-indigo-500' : 'border-gray-300'"
+                    x-on:click="platform = 2">
+                        <i class="fab fa-youtube text-2xl"></i>
+                        <span class="text-sm mt-2">
+                            YouTube
+                        </span>
+                    </button>
+                </div>
+
+                <p>
+                    Primero selecciona la plataforma y luego sube el video o coloca el enlace de YouTube.
+                </p>
+
         </div>
+            <div>
+                <div class="mt-2" x-show="platform == 1" x-cloak>
+                                <x-label>
+                                    Video
+                                </x-label>
+
+                            <x-progress-indicators wire:model="video"/>
+                </div>
+
+                <div class="mt-2" x-show="platform == 2" x-cloak>
+                            <x-label>
+                                Enlace de YouTube
+                            </x-label>
+
+                        <x-input
+                            wire:model="url"
+                            placeholder="inserta el enlace de YouTube"
+                            class="w-full"/>
+                </div>
+
+            </div>
+
+            <div class="flex justify-end space-x-2 mt-4">
+                <x-danger-button wire:click="$set('editVideo', false)">
+                    Cancelar
+                </x-danger-button>
+
+                <x-button class="ml-2" wire:click="saveVideo">
+                    Actualizar
+                </x-button>
+            </div>
+</div>
     @else
     <div>
         <h2 class="font-semibold text-lg mb-1">

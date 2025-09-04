@@ -159,7 +159,7 @@
                         Plataformas
                     </x-label>
 
-                    <div class="md:flex md:items-center md:space-x-4 mb-2 space-y-4 md:space-y-0">
+                <div class="md:flex md:items-center md:space-x-4 mb-2 space-y-4 md:space-y-0">
                         <div class="md:flex md:items-center md:space-x-4 space-y-4 md:space-y-0">
                             <button type="button"
                             class="inline-flex flex-col justify-center items-center w-full md:w-20 h-24 border rounded"
@@ -186,26 +186,27 @@
                             Primero selecciona la plataforma y luego sube el video o coloca el enlace de YouTube.
                         </p>
 
+                </div>
+
+                    <div class="mt-2" x-show="platform == 1" x-cloak>
+                                    <x-label>
+                                        Video
+                                    </x-label>
+
+                                <x-progress-indicators wire:model="video"/>
                     </div>
 
-                        <div class="mt-2" x-show="platform == 1" x-cloak>
-                        <x-label>
-                            Video
-                        </x-label>
+                    <div class="mt-2" x-show="platform == 2" x-cloak>
+                                <x-label>
+                                    Enlace de YouTube
+                                </x-label>
 
-                        <x-progress-indicators wire:model="video"/>
+                            <x-input
+                                wire:model="url"
+                                placeholder="inserta el enlace de YouTube"
+                                class="w-full"/>
                     </div>
 
-                        <div class="mt-2" x-show="platform == 2" x-cloak>
-                        <x-label>
-                            Enlace de YouTube
-                        </x-label>
-
-                        <x-input
-                            wire:model="url"
-                            placeholder="inserta el enlace de YouTube"
-                            class="w-full"/>
-                        </div>
                 </div>
             </div>
 
