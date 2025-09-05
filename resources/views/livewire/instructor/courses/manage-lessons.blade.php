@@ -29,11 +29,11 @@
                 store: {
                     set: (sortable) => {
 
-                       Livewire.dispatch('sortLessons',
-                       {
+                    Livewire.dispatch('sortLessons',
+                    {
                         sorts: sortable.toArray(),
                         sectionId: {{$section->id}}
-                       })
+                    })
                     }
                 }
             });"
@@ -47,7 +47,7 @@
                 <li wire:key="lesson-{{ $lesson->id }}" data-id="{{$lesson->id}}">
                     {{-- Editar y Mostrar Lecciones --}}
                     <div class="bg-white rounded-lg shadow-lg px-6 py-4">
-                       @if ($lessonEdit['id'] == $lesson->id)
+                    @if ($lessonEdit['id'] == $lesson->id)
 
                         <form wire:submit="update">
                             <div class="flex items-center space-x-2">

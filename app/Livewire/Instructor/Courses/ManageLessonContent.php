@@ -78,7 +78,7 @@ class ManageLessonContent extends Component
         }
 
         public function saveDescription(){
-            
+
             $this->lesson->description = $this->description;
             $this->lesson->save();
 
