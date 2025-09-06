@@ -184,4 +184,12 @@
 
     </div>
 
+
+    <hr>
+
+    <div>
+       <x-toggle label="Publicado" wire:model="is_published"/>
+       <x-toggle label="Vista Previa" wire:model="is_preview"/>
+    </div>
+
 </div>
