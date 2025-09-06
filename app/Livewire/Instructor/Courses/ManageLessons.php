@@ -6,6 +6,7 @@ use App\Events\VideoUploaded;
 use App\Models\Lesson;
 use App\Rules\UniqueLessonCourse;
 use Livewire\Attributes\On;
+use Livewire\Attributes\Reactive;
 use Livewire\Component;
 
 use Livewire\WithFileUploads;
@@ -17,6 +18,8 @@ class ManageLessons extends Component
 
     public $section;
     public $lessons;
+
+   
     public $orderLessons;
 
     public $video, $url;
@@ -137,7 +140,7 @@ class ManageLessons extends Component
         $this->reset('video');
     }
 
-    
+
 
     public function render()
     {
