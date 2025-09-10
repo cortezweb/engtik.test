@@ -2,9 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Models\Course;
 use App\Models\User;
+
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,6 +16,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        Storage::deleteDirectory('courses');
+        Storage::makeDirectory('courses/images');
+
+
         // User::factory(10)->create();
 
         User::factory()->create([
@@ -28,5 +35,7 @@ class DatabaseSeeder extends Seeder
             LevelSeeder::class,
             // Add other seeders here
         ]);
+
+        Course::factory(50)->create();
     }
 }

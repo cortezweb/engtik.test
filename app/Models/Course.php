@@ -3,12 +3,15 @@
 namespace App\Models;
 
 use App\Enums\CourseStatus;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
 class Course extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'title',
         'slug',
