@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Observers\SectionObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 
@@ -11,6 +12,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Section extends Model
 {
+    use HasFactory;
+
+     //asignacion masiva
+
     protected $fillable = [
         'name',
         'course_id',

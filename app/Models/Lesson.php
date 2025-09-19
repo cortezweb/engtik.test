@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Observers\LessonObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -12,6 +13,10 @@ use Illuminate\Support\Facades\Storage;
 
 class Lesson extends Model
 {
+    use HasFactory;
+
+     //asignacion masiva
+
     protected $fillable = [
         'name',
         'slug',
