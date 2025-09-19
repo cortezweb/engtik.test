@@ -22,9 +22,10 @@ class LessonFactory extends Factory
             'video_original_name' => 'https://youtu.be/9taAy5x0Dw8?si=hjuxopEvu05ha6-E',
             'video_path' => '9taAy5x0Dw8',
             'image_path' => 'https://img.youtube.com/vi/9taAy5x0Dw8/0.jpg',
-            'description' => $this->faker->paragraph(),
+            'description' => $this->faker->text(),
             'duration' => 129, // example duration in seconds
-            'is_processed' => 1
+            'is_published' => true,
+            'is_processed' => true,
         ];
     }
 }

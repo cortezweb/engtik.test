@@ -14,7 +14,7 @@
         </a>
     </div>
 
-    <ul>
+    <ul class="space-y-2">
         @forelse ($courses as $course)
 
         <li class="bg-white rounded-lg shadow-lg overflow-hidden mb-2">
@@ -112,6 +112,10 @@
 
         @endforelse
     </ul>
+
+    <div class="mt-8">
+        {{$courses->links()}}
+    </div>
 </x-container>
 
 
