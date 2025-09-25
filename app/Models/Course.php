@@ -44,10 +44,10 @@ protected function image(): Attribute
         }
     );
 }
-
+    //Relacion muchos a uno
     public function teacher()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
 
     }
 
