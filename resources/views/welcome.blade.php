@@ -78,7 +78,7 @@
 
                     <div class="px-6 pt-4 pb-5">
                         <h1 class="line-clamp-2 text-lg leading-5 min-h-[42px] mb-1">
-                            <a href="">
+                            <a href="{{route('courses.show', $course)}}">
                                 {{$course->title}}
                             </a>
                         </h1>
@@ -120,7 +120,7 @@
 
                     </p>
 
-                    <a href="">
+                    <a href="{{route('courses.show', $course)}}">
                         <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg">
                             Más información
                         </button>

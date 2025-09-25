@@ -2,8 +2,8 @@
     $links = [
         [
             'name' => 'Cursos',
-            'route' => route('instructor.courses.index'),
-            'active' => request()->routeIs('instructor.courses.index')
+            'route' => route('courses.index'),
+            'active' => request()->routeIs('courses.*')
         ]
 ];
 @endphp
