@@ -23,6 +23,7 @@ class CourseFactory extends Factory
             'title' => $this->faker->sentence(),
             'slug' => $this->faker->slug(),
             'status' => 3, // Assuming 3 represents 'published'
+            'summary' => $this->faker->paragraph,
             'image_path' => 'courses/images/' . $this->faker->image('public\storage\courses\images', 640, 480, null, false),
             'user_id' => 1, // Assuming user with ID 1 exists
             'level_id' => level::all()->random()->id, // Assuming level with ID 1 exists
