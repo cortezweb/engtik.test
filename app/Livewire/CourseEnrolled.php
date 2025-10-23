@@ -36,6 +36,15 @@ class CourseEnrolled extends Component
 
     }
 
+    public function buyNow()
+    {
+        $this->removeCart();
+        $this->addCart();
+        //Redireccionar a la pagina de checkout
+
+        return redirect()->route('cart.index');
+    }
+
     public function render()
     {
         return view('livewire.course-enrolled');

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\WelcomeController;
 use App\Models\Course;
@@ -18,6 +19,9 @@ Route::get('courses', [CourseController::class, 'index'])
 
 Route::get('courses/{course}', [CourseController::class, 'show'])
         ->name('courses.show');
+
+Route::get('cart', [CartController::class, 'index'])
+        ->name('cart.index');
 
 Route::get('prueba', function(){
 
