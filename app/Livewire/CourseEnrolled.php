@@ -25,6 +25,17 @@ class CourseEnrolled extends Component
         ]);
     }
 
+    public function removeCart()
+    {
+        Cart::instance('shopping');
+        $itemCart = Cart::content()->where('id', $this->course->id)->first();
+
+        if ($itemCart) {
+            Cart::remove($itemCart->rowId);
+        }
+
+    }
+
     public function render()
     {
         return view('livewire.course-enrolled');
