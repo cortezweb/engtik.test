@@ -4,6 +4,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\WelcomeController;
 use App\Models\Course;
 use App\Models\Lesson;
+use CodersFree\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Laravel\Jetstream\Rules\Role;
@@ -20,18 +21,7 @@ Route::get('courses/{course}', [CourseController::class, 'show'])
 
 Route::get('prueba', function(){
 
-    $course = Course::first();
-
-    $sections = $course->sections()
-            ->with(['lessons' => function ($query){
-                $query->orderBy('position', 'asc');
-            }])
-            ->get();
-
-    $orderLessons = $sections->pluck('lessons')
-            ->collapse()
-            ->pluck('id');
-
-    return $orderLessons->search(6) + 1;
+    Cart::instance('shopping');
+    return Cart::content();
 
 });
