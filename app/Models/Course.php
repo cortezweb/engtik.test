@@ -83,5 +83,13 @@ protected function image(): Attribute
         return $this->hasMany(Section::class);
     }
 
+    //Relacion muchos a muchos
+
+    public function students()
+    {
+        return $this->belongsToMany(User::class, 'course_user', 'course_id', 'user_id')
+            ->withTimestamps();
+    }
+
 
 }

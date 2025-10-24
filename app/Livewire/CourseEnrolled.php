@@ -23,6 +23,9 @@ class CourseEnrolled extends Component
                 'teacher' => $this->course->teacher->name,
             ]
         ]);
+
+        $this->dispatch('cart-updated', Cart::count());
+
     }
 
     public function removeCart()
@@ -34,6 +37,7 @@ class CourseEnrolled extends Component
             Cart::remove($itemCart->rowId);
         }
 
+        $this->dispatch('cart-updated', Cart::count());
     }
 
     public function buyNow()
@@ -43,6 +47,15 @@ class CourseEnrolled extends Component
         //Redireccionar a la pagina de checkout
 
         return redirect()->route('cart.index');
+    }
+
+    public function enrolled()
+    {
+        if (auth()->check()) {
+            $this->course->students()->attach(auth()->id());
+        }
+
+        return redirect()->route('courses.status', $this->course);
     }
 
     public function render()

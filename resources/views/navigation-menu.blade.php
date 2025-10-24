@@ -5,7 +5,9 @@
             'route' => route('courses.index'),
             'active' => request()->routeIs('courses.*')
         ]
-];
+    ];
+
+    $cartCount = \CodersFree\Shoppingcart\Facades\Cart::instance('shopping')->count();
 @endphp
 
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
@@ -34,6 +36,25 @@
 
             <div class="hidden sm:flex sm:items-center sm:ms-6">
 
+            {{-- Carrito --}}
+
+
+            <div class="relative"
+                x-data="{
+                    count: {{Cart::instance('shopping')->count()}},
+                    }"
+                x-on:cart-updated.window="count = $event.detail[0]"
+                    >
+                <a href="{{ route('cart.index') }}" class="flex items-center text-gray-600 hover:text-blue-600 transition-colors duration-200" aria-label="Ver carrito">
+                    <i class="fa-solid fa-cart-shopping text-2xl"></i>
+                    <span
+                        x-show="count"
+                        x-text="count"
+                        class="absolute -top-2 -end-2 bg-red-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center"
+                    >
+                    </span>
+                </a>
+            </div>
 
                 <!-- Settings Dropdown -->
                 <div class="ms-3 relative">
@@ -112,6 +133,7 @@
 
                     @endauth
                 </div>
+
             </div>
 
             <!-- Hamburger -->
