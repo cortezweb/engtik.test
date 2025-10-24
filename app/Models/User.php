@@ -10,12 +10,14 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 
+
 class User extends Authenticatable
 {
     use HasApiTokens;
+    use HasFactory;
 
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory;
+
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
@@ -63,5 +65,11 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    //Relacion muchos a muchos
+    public function courses_enrolled(){
+
+        return $this->hasMany(Course::class, 'course_user', 'user_id', 'course_id');
     }
 }

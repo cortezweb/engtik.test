@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Livewire;
+use Illuminate\Support\Facades\Auth;
 
 use CodersFree\Shoppingcart\Facades\Cart;
 use Livewire\Component;
+
 
 class CourseEnrolled extends Component
 {
@@ -51,12 +53,14 @@ class CourseEnrolled extends Component
 
     public function enrolled()
     {
-        if (auth()->check()) {
-            $this->course->students()->attach(auth()->id());
+        if (auth::check()) {
+            $this->course->students()->attach(Auth::id());
         }
 
         return redirect()->route('courses.status', $this->course);
+
     }
+
 
     public function render()
     {
