@@ -1,5 +1,5 @@
 <div>
-    @if ($course->price->course == 0)
+    @if ($course->price->value == 0)
         <button
         wire:click="enrolled"
         class="w-full bg-red-600 hover:bg-red-700 uppercase text-white font-semibold py-2 px-4 rounded-lg mb-4">

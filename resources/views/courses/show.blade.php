@@ -112,21 +112,50 @@
             <div class="col-span-1 lg:order-2 order-1">
                 {{-- Sidebar --}}
                  {{-- Precio e inscripcion --}}
-                 <div class="mb-8 lg:sticky lg:top-20">
+            <div class="mb-8 lg:sticky lg:top-20">
                 <div class="bg-white rounded-lg shadow p-6 mb-6">
-                    <p class="font-semibold mb-2 text-2xl text-center ">
-                        @if ($course->price->value == 0)
-                            <span class="text-green-600">
-                                Gratis
-                            </span>
 
-                        @else
-                        <span class="text-gray-700">
-                            {{number_format($course->price->value, 2)}} USD
+
+                @can('enrolled', $course)
+
+
+                    <p class="flex items-center mb-3 text-gray-700">
+                        <svg class="w-5 h-5 mr-2 text-green-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        <span class="font-semibold text-center">
+                            Adquirido el Curso:
+                            <strong>
+                                {{ optional($course->students()->where('user_id', auth()->id())->first()?->pivot)->created_at ? $course->students()->where('user_id', auth()->id())->first()->pivot->created_at->format('d/m/Y') : '' }}
+                            </strong>
                         </span>
-                    @endif
-                 </p>
-                 @livewire('course-enrolled', ['course' => $course])
+                    </p>
+
+
+                        <a href="{{route('courses.status', $course)}}"
+                           class="w-full uppercase block text-center bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-lg shadow transition duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2">
+                            Continuar con el curso
+                        </a>
+                @else
+
+                        <p class="font-semibold mb-2 text-2xl text-center ">
+                            @if ($course->price->value == 0)
+                                <span class="text-green-600">
+                                    Gratis
+                                </span>
+
+                            @else
+                            <span class="text-gray-700">
+                                {{number_format($course->price->value, 2)}} USD
+                            </span>
+                        @endif
+                    </p>
+
+
+                        @livewire('course-enrolled', ['course' => $course])
+                @endcan
+
+
 
                 </div>
 

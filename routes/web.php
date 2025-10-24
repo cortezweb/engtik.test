@@ -24,4 +24,6 @@ Route::get('cart', [CartController::class, 'index'])
 
 Route::get('prueba', function(){
 
+    dd(auth()->user()->courses_enrolled->contains(18));
+
 });
