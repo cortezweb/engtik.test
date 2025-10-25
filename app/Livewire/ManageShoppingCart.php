@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Livewire;
+use Illuminate\Support\Facades\Auth;
+
 
 use CodersFree\Shoppingcart\Facades\Cart;
 use Livewire\Component;
@@ -14,6 +16,10 @@ class ManageShoppingCart extends Component
         Cart::remove($rowId);
 
         $this->dispatch('cart-updated', Cart::count());
+
+        if (auth::check()){
+            Cart::store(Auth::id());
+        }
     }
 
     public function destroy()
@@ -22,6 +28,10 @@ class ManageShoppingCart extends Component
         Cart::destroy();
 
         $this->dispatch('cart-updated', Cart::count());
+
+        if (auth::check()){
+            Cart::store(Auth::id());
+        }
     }
 
 

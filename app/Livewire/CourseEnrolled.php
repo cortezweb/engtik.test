@@ -25,6 +25,9 @@ class CourseEnrolled extends Component
                 'teacher' => $this->course->teacher->name,
             ]
         ]);
+        if (auth::check()){
+        Cart::store(Auth::id());
+    }
 
         $this->dispatch('cart-updated', Cart::count());
 
@@ -38,8 +41,12 @@ class CourseEnrolled extends Component
         if ($itemCart) {
             Cart::remove($itemCart->rowId);
         }
-
         $this->dispatch('cart-updated', Cart::count());
+
+        if (auth::check()){
+            Cart::store(Auth::id());
+        }
+
     }
 
     public function buyNow()
