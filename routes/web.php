@@ -26,6 +26,9 @@ Route::get('cart', [CartController::class, 'index'])
 Route::get('checkout', [CheckoutController::class, 'index'])
         ->name('checkout.index');
 
+Route::post('checkout/createPaypalOrder', [CheckoutController::class, 'createPaypalOrder'])
+        ->name('checkout.createPaypalOrder');
+
 Route::get('prueba', function(){
 
     dd(auth()->user()->courses_enrolled->contains(18));
