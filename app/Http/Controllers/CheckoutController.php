@@ -64,6 +64,10 @@ class CheckoutController extends Controller
         return response()->json($response);
     }
 
+    public function capturePaypalOrder(Request $request){
+
+    }
+
     public function generateAcessToken(){
         $client_id = config('services.paypal.client_id');
         $secret = config('services.paypal.secret');
