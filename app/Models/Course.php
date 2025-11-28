@@ -34,6 +34,13 @@ protected $casts = [
         'status' => CourseStatus::class,
         'published_at' => 'datetime',
     ];
+
+public function getRouteKeyName():string
+    {
+        return 'slug';
+    }
+
+
 protected function image(): Attribute
 {
     return Attribute::make(
