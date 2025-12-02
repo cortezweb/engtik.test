@@ -65,7 +65,7 @@
                                                 <ul>
                                                     @foreach ($section->lessons as $lesson)
                                                         <li>
-                                                            <a href="" class="flex">
+                                                            <a href="{{route('courses.status', [$course, $lesson])}}" class="flex">
                                                                 <i class="far fa-play-circle text-blue-500 mt-0.5 mr-2"></i>
 
                                                                 <span class="font-semibold ml-2 text-gray-600 hover:text-blue-800 text-sm">

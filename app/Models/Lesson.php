@@ -39,6 +39,13 @@ class Lesson extends Model
         'is_processed' => 'boolean',
     ];
 
+    public function getRoutekeyName():string
+    {
+        return 'slug';
+    }
+
+     //accesor para la imagen
+
 
     public function image(): Attribute
         {

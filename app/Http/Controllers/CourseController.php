@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\Lesson;
 use Illuminate\Http\Request;
 
 class CourseController extends Controller
@@ -25,8 +26,25 @@ class CourseController extends Controller
         return view('courses.my-courses', compact('courses'));
     }
 
-    public function status()
+    public function status(Course $course, Lesson $lesson = null)
     {
-        return view('courses.status');
+        if (!$lesson) {
+            // Cargar las secciones y lecciones publicadas ordenadas
+            $course->load(['sections' => function($query) {
+                $query->orderBy('position', 'asc')
+                    ->with(['lessons' => function($query){
+                        $query->orderBy('position', 'asc')
+                            ->where('is_published', true);
+                    }]);
+            }]);
+
+            // Buscar la primera lección publicada
+            $lesson = $course->sections->pluck('lessons')->collapse()->first();
+
+            // Redirigir correctamente
+            return redirect()->route('courses.status', [$course, $lesson]);
+        }
+
+        return view('courses.status', compact('course', 'lesson'));
     }
 }
