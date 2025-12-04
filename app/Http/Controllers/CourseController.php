@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use App\Models\Lesson;
+use App\Models\Section;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -30,20 +31,20 @@ class CourseController extends Controller
     public function status(Course $course, Lesson $lesson = null)
     {
 
+    //Recuperar las lecciones en roden
+    $sections = Section::where('course_id', $course->id)
+        ->whereHas('lessons', function($query){
+          $query->where('is_published', true);
+        })
+        ->with('lessons', function($query){
+            $query
+            ->where('is_published', true)
+            ->orderBy('position', 'asc');
+        })
+        ->orderBy('position', 'asc')
+        ->get();
 
-
-
-            // Recuperar las secciones y lecciones publicadas ordenadas
-            $course->load(['sections' => function($query) {
-                $query->orderBy('position', 'asc')
-                    ->with(['lessons' => function($query){
-                        $query->orderBy('position', 'asc')
-                            ->where('is_published', true);
-                    }]);
-            }]);
-            // Buscar la primera lección publicada
-            $lessons = $course->sections->pluck('lessons')->collapse();
-
+            $lessons = $sections->pluck('lessons')->collapse();
 
             //Sin lección, buscar la lección actual del usuario en el curso
         if (!$lesson) {
@@ -85,6 +86,6 @@ class CourseController extends Controller
 
         }
 
-        return view('courses.status', compact('course', 'lessons', 'lesson'));
+        return view('courses.status', compact('course', 'sections', 'lessons', 'lesson'));
     }
 }
