@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use App\Models\Lesson;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CourseController extends Controller
 {
@@ -28,7 +29,22 @@ class CourseController extends Controller
 
     public function status(Course $course, Lesson $lesson = null)
     {
+
+
+
         if (!$lesson) {
+
+            $lesson = Lesson::whereHas('section', function($query) use ($course) {
+                $query->where('course_id', $course->id);
+            })->whereHas('users', function($query)
+                {
+                    $query->where('user_id', auth()->id())
+                        ->where('current', true);
+            })
+            ->first();
+
+            if(!$lesson){
+
             // Cargar las secciones y lecciones publicadas ordenadas
             $course->load(['sections' => function($query) {
                 $query->orderBy('position', 'asc')
@@ -40,9 +56,30 @@ class CourseController extends Controller
 
             // Buscar la primera lección publicada
             $lesson = $course->sections->pluck('lessons')->collapse()->first();
-
+            }
+           
             // Redirigir correctamente
             return redirect()->route('courses.status', [$course, $lesson]);
+        }
+
+        if (auth()->check()) {
+
+        DB::table('course_lesson_user')
+            ->where('user_id', auth()->id())
+            ->where('course_id', $course->id)
+            ->update([
+                'current' => false
+            ]);
+
+        DB::table('course_lesson_user')
+            ->updateOrInsert([
+                'course_id' => $course->id,
+                'lesson_id' => $lesson->id,
+                'user_id' => auth()->id()
+            ], [
+                'current' => true
+            ]);
+
         }
 
         return view('courses.status', compact('course', 'lesson'));

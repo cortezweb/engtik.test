@@ -68,4 +68,13 @@ class Lesson extends Model
     }
 
 
+    //Relacion uno a muchos
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'Course_lesson_user')
+                ->withPivot(['course_id','current', 'completed'])
+                ->withTimestamps();
+    }
+
+
 }
