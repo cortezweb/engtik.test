@@ -3,7 +3,7 @@
         <div class="col-span-2">
             <iframe class="w-full aspect-video" src="https://www.youtube.com/embed/{{$current->video_path}}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             <h1 class="text-2xl font-bold text-gray-800 mt-4">
-                {{$lessons->search($current->id)+1}}. {{$current->name}}
+                {{$lessons->pluck('id')->search($current->id)+1}}. {{$current->name}}
             </h1>
 
             @if ($current->description)
@@ -18,15 +18,15 @@
 
             <div class="bg-white shadow-xl rounded-lg px-6 py-4 mt-6">
                 <div class="flex justify-between">
-                    <a href="" class="font-bold">
+                    <button wire:click="previousLesson()" class="font-bold">
                         Tema Anterior
-                    </a>
-                    
-                    <a href="" class="font-bold">
-                        Tema Anterior
-                    </a>
+                    </button>
+
+                    <button wire:click="nextLesson()" class="font-bold">
+                        Tema Siguiente
+                    </button>
                 </div>
-            
+
             </div>
 
         </div>
@@ -50,7 +50,7 @@
                         </p>
                     </div>
 
-                  
+
 
                 </div>
 
@@ -85,10 +85,10 @@
                     <ul class="space-y-1 mt-2">
                         @foreach ($section['lessons'] as $lesson)
                             <li>
-                                <a href="" class="w-full flex">
+                                <a href="{{route('courses.status', [$course, $lesson['slug']])}}" class="w-full flex">
                                     <i class="fa-solid fa-circle mt-1 mr-2"></i>
                                     <span>
-                                        {{$lessons->search($lesson['id']) + 1}}. {{$lesson['name']}}
+                                        {{$lessons->pluck('id')->search($lesson['id']) + 1}}. {{$lesson['name']}}
                                     </span>
 
                                 </a>

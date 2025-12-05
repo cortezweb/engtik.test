@@ -5,7 +5,7 @@
         @livewire('course-status', [
                 'course' => $course,
                 'sections' => $sections->toArray(),
-                'lessons' => $lessons->pluck('id'),
+                'lessons' => $lessons,
                 'current' => $lesson,
             ])
 
