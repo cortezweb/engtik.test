@@ -63,10 +63,10 @@
 
                     <div class="relative pt-1">
                         <div class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-gray-200">
-                          <div
+                        <div
                             class="bg-blue-500 h-full shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center"
                             style="width:30%">
-                          </div>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -86,7 +86,7 @@
                         @foreach ($section['lessons'] as $lesson)
                             <li>
                                 <a href="{{route('courses.status', [$course, $lesson['slug']])}}" class="w-full flex">
-                                    <i class="fa-solid fa-circle mt-1 mr-2"></i>
+                                    <i class="fa-regular {{$lesson['id'] == $current->id ? 'fa-circle-check' : 'fa-circle'}}  mt-1 mr-2"></i>
                                     <span>
                                         {{$lessons->pluck('id')->search($lesson['id']) + 1}}. {{$lesson['name']}}
                                     </span>
@@ -96,11 +96,8 @@
                             </li>
                         @endforeach
                     </ul>
-
-
                     </li>
                 @endforeach
-
             </div>
         </aside>
     </div>
