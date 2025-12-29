@@ -1,7 +1,26 @@
 <div>
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div class="col-span-1  lg:col-span-2">
-            <iframe class="w-full aspect-video" src="https://www.youtube.com/embed/{{$current->video_path}}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+
+            @if ($current->platform == 1)
+                <video class="w-full aspect-video" controls>
+                    <source src="{{Storage::url($current->video_path)}}" type="video/mp4">
+                </video>
+            @else
+
+            <iframe class="w-full aspect-video"
+            src="https://www.youtube.com/embed/{{$current->video_path}}"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen></iframe>
+
+            @endif
+
+
+
+
             <h1 class="text-2xl font-bold text-gray-800 mt-4">
                 {{$lessons->pluck('id')->search($current->id)+1}}. {{$current->name}}
             </h1>
