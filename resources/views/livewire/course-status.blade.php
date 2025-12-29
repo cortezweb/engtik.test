@@ -63,14 +63,14 @@
 
                 <div class="mt-2">
                     <p class="text-gray-600 text-sm">
-                        10% Completo
+                        {{$advance}}% Completo
                     </p>
 
                     <div class="relative pt-1">
                         <div class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-gray-200">
                         <div
                             class="bg-blue-500 h-full shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center"
-                            style="width:30%">
+                            style="width:{{ $advance }}%">
                         </div>
                         </div>
                     </div>
@@ -87,20 +87,21 @@
                             <i class="mt-1 fas fa-angle-down"></i>
                         </button>
 
-                    <ul class="space-y-1 mt-2">
-                        @foreach ($section['lessons'] as $lesson)
+                        <ul class="space-y-1 mt-2" x-show="open" x-cloak>
+                            @foreach ($section['lessons'] as $lesson)
                             <li>
                                 <a href="{{route('courses.status', [$course, $lesson['slug']])}}" class="w-full flex">
-                                    <i class="fa-regular {{$lesson['id'] == $current->id ? 'fa-circle-check' : 'fa-circle'}}  mt-1 mr-2"></i>
+                                    <i class="fa-solid {{$lesson['id'] == $current->id ? 'fa-circle-dot' : 'fa-circle' }}  mt-1 mr-2 {{ $open_lessons->where('lesson_id', $lesson['id'])->where('user_id', auth()->id())->where('completed', 1)->count() ? 'text-yellow-500' : '' }}"></i>
+
                                     <span>
-                                        {{$lessons->pluck('id')->search($lesson['id']) + 1}}. {{$lesson['name']}}
+                                        {{$lessons->pluck('id')->search($lesson['id']) + 1 }}. {{$lesson['name']}}
                                     </span>
-
                                 </a>
-
                             </li>
-                        @endforeach
-                    </ul>
+                            @endforeach
+                        </ul>
+
+
                     </li>
                 @endforeach
             </div>
