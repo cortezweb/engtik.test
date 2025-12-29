@@ -78,18 +78,18 @@
 
                 {{-- secciones --}}
                 @foreach ($sections as $section)
-                    <li>
-                        <button class="text-left flex justify-between">
+                    <li x-data="{ open: '{{$section['id'] == $current->section_id}}' }" class="mb-4">
+                        <button x-on:click="open = !open" class="text-left flex justify-between">
                             <span>
                                 {{$section['name']}}
                             </span>
 
-                            <i class="mt-1 fas fa-angle-down"></i>
+                            <i class="mt-1 fas"  x-bind:class="open ? 'fa-angle-up' : 'fa-angle-down'"></i>
                         </button>
 
                         <ul class="space-y-1 mt-2" x-show="open" x-cloak>
                             @foreach ($section['lessons'] as $lesson)
-                            <li>
+                            <li >
                                 <a href="{{route('courses.status', [$course, $lesson['slug']])}}" class="w-full flex">
                                     <i class="fa-solid {{$lesson['id'] == $current->id ? 'fa-circle-dot' : 'fa-circle' }}  mt-1 mr-2 {{ $open_lessons->where('lesson_id', $lesson['id'])->where('user_id', auth()->id())->where('completed', 1)->count() ? 'text-yellow-500' : '' }}"></i>
 
