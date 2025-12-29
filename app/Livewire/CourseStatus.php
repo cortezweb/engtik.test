@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class CourseStatus extends Component
@@ -12,10 +13,56 @@ class CourseStatus extends Component
     public $lessons;
     public $current;
 
+    public $open_lessons;
+    public $completed = false;
+
+    public function mount(){
+        $this->setOpenLessons();
+        $this->setCompleted();
+    }
+
+    public function updated($property, $value)
+    {
+        if ($property == 'completed') {
+            DB::table('course_lesson_user')
+                ->where('lesson_id', $this->current->id)
+                ->where('user_id', auth()->id())
+                ->update(['completed' => $value]);
+
+            $this->setOpenLessons();
+        }
+    }
+
+    public function setOpenLessons(){
+
+        $this->open_lessons = DB::table('course_lesson_user')
+            ->where('course_id', $this->course->id)
+            ->where('user_id', auth()->id())
+            ->get();
+
+    }
+
+
+    public function setCompleted(){
+
+        if (auth()->check() ) {
+
+            $this->completed = $this->open_lessons
+            ->where('lesson_id', $this->current->id)
+            ->where('user_id', auth()->id())
+            ->first()
+            ->completed;
+
+        }
+
+    }
+
+
+
     public function previousLesson()
     {
         $index = $this->lessons->pluck('id')->search($this->current->id);
-    
+
         if ($index == 0) {
             $lesson = $this->lessons->last();
         }else{
@@ -28,7 +75,7 @@ class CourseStatus extends Component
     public function nextLesson()
     {
         $index = $this->lessons->pluck('id')->search($this->current->id);
-    
+
         if ($index == $this->lessons->count() - 1) {
             $lesson = $this->lessons->first();
         }else{
@@ -36,7 +83,7 @@ class CourseStatus extends Component
         }
 
         return redirect()->route('courses.status', [$this->course,$lesson['slug']]);
-    
+
     }
 
     public function render()

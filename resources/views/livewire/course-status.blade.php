@@ -12,9 +12,14 @@
                 </p>
             @endif
 
-            <div class= "flex items-center space-x-2">
-                <x-toggle/> Marcar esta unidad Culminada
-            </div>
+
+            @auth
+                <div class= "flex items-center space-x-2">
+                    <x-toggle wire:model="completed" label="Marcar esta unidad Culminada"/>
+                </div>
+
+            @endauth
+
 
             <div class="bg-white shadow-xl rounded-lg px-6 py-4 mt-6">
                 <div class="flex justify-between">
