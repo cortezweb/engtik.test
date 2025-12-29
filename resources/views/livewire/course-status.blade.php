@@ -1,6 +1,6 @@
 <div>
-    <div class="grid grid-cols-3 gap-8">
-        <div class="col-span-2">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="col-span-1  lg:col-span-2">
             <iframe class="w-full aspect-video" src="https://www.youtube.com/embed/{{$current->video_path}}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             <h1 class="text-2xl font-bold text-gray-800 mt-4">
                 {{$lessons->pluck('id')->search($current->id)+1}}. {{$current->name}}
@@ -37,27 +37,27 @@
         </div>
 
         <aside class="col-span-1">
-            <div class="card">
-                <h1 class="text-2xl font-bold leading-8 text-center text-gray-800 mt-4">
-                    <a class="hover:text-blue-600" href="{{route('courses.show', $course)}}">
-                        {{$course->title}}
-                    </a>
-                </h1>
+                <div class="card">
+                    <h1 class="text-2xl font-bold leading-8 text-center text-gray-800 mt-4">
+                        <a class="hover:text-blue-600" href="{{route('courses.show', $course)}}">
+                            {{$course->title}}
+                        </a>
+                    </h1>
 
-                <div class="flex items-center">
-                    <figure>
-                        <img class="w-12 h-12 object-center rounded-full" src="{{$course->teacher->profile_photo_url}}" alt="">
-                    </figure>
+                    <div class="flex items-center">
+                        <figure>
+                            <img class="w-12 h-12 object-center rounded-full" src="{{$course->teacher->profile_photo_url}}" alt="">
+                        </figure>
 
-                    <div class="flex-1">
-                        <p>
-                            {{$course->teacher->name}}
-                        </p>
+                        <div class="flex-1">
+                            <p>
+                                {{$course->teacher->name}}
+                            </p>
+                        </div>
+
+
+
                     </div>
-
-
-
-                </div>
 
                 {{-- Avance --}}
 
@@ -104,7 +104,7 @@
 
                     </li>
                 @endforeach
-            </div>
+                </div>
         </aside>
     </div>
 </div>
