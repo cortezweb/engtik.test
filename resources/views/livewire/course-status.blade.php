@@ -9,31 +9,57 @@
 
         <div class="col-span-1  lg:col-span-2">
 
+           @if (Gate::allows('enrolled', $course) || $current->is_preview || $course->price->value == 0)
             <div wire:ignore>
             @if ($current->platform == 1)
                     <video id="player" playsinline controls data-poster="{{$current->image}}">
                     <source src="{{Storage::url($current->video_path)}}" type="video/mp4">
                     </video>
             @else
-                    {{-- <iframe class="w-full aspect-video"
-                    src="https://www.youtube.com/embed/{{$current->video_path}}"
-                    frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerpolicy="strict-origin-when-cross-origin"
-                    allowfullscreen></iframe> --}}
+                {{-- <iframe class="w-full aspect-video"
+                src="https://www.youtube.com/embed/{{$current->video_path}}"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen></iframe> --}}
 
 
-                    <div class="plyr__video-embed" id="player">
-                        <iframe
-                          src="https://www.youtube.com/embed/{{$current->video_path}}"
-                          allowfullscreen
-                          allowtransparency
-                          allow="autoplay"
-                        ></iframe>
-                      </div>
+                <div class="plyr__video-embed" id="player">
+                    <iframe
+                      src="https://www.youtube.com/embed/{{$current->video_path}}"
+                      allowfullscreen
+                      allowtransparency
+                      allow="autoplay"
+                    ></iframe>
+                  </div>
 
             @endif
             </div>
+           @else
+                <div class="relative rounded-lg overflow-hidden shadow-lg border border-gray-200">
+                    <figure>
+                        <img 
+                            class="w-full aspect-video object-cover object-center transition-transform duration-300 hover:scale-105" 
+                            src="{{$current->image}}" 
+                            alt="Imagen de la lección {{$current->name}}"
+                            loading="lazy"
+                        >
+                    </figure>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent flex flex-col justify-center items-center">
+                        <p class="text-white text-lg font-semibold mb-4 drop-shadow">
+                            Para acceder a este contenido debes adquirir el curso
+                        </p>
+                        <a 
+                            href="{{ route('courses.show', $course) }}"
+                            class="inline-block px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded shadow transition"
+                        >
+                            Adquirir Curso
+                        </a>
+                    </div>
+                </div>
+           @endif
+
+            
 
 
 
