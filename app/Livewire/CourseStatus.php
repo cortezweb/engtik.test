@@ -93,6 +93,17 @@ class CourseStatus extends Component
 
     }
 
+    public function completeLesson(){
+        
+        DB::table('course_lesson_user')
+            ->where('lesson_id', $this->current->id)
+            ->where('user_id', auth()->id())
+            ->update(['completed' => true]);
+
+        $this->nextLesson();
+        
+    }
+
     public function render()
     {
 

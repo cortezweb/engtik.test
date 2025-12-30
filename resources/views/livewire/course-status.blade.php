@@ -1,23 +1,39 @@
 <div>
+    @push('css')
+        <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+    @endpush
+
+
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+
         <div class="col-span-1  lg:col-span-2">
 
-
+            <div wire:ignore>
             @if ($current->platform == 1)
-                <video class="w-full aspect-video" controls>
+                    <video id="player" playsinline controls data-poster="{{$current->image}}">
                     <source src="{{Storage::url($current->video_path)}}" type="video/mp4">
-                </video>
+                    </video>
             @else
+                    {{-- <iframe class="w-full aspect-video"
+                    src="https://www.youtube.com/embed/{{$current->video_path}}"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allowfullscreen></iframe> --}}
 
-            <iframe class="w-full aspect-video"
-            src="https://www.youtube.com/embed/{{$current->video_path}}"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen></iframe>
+
+                    <div class="plyr__video-embed" id="player">
+                        <iframe
+                          src="https://www.youtube.com/embed/{{$current->video_path}}"
+                          allowfullscreen
+                          allowtransparency
+                          allow="autoplay"
+                        ></iframe>
+                      </div>
 
             @endif
-
+            </div>
 
 
 
@@ -126,4 +142,24 @@
                 </div>
         </aside>
     </div>
+
+    @push('js')
+            <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
+        <script>
+            const player = new Plyr('#player');
+
+            player.on('ready', event => {
+                player.play();
+            });
+
+            player.on('ended', event => {
+                @this.call('completeLesson');
+            });
+            
+
+        </script>
+    @endpush
+
+
+
 </div>
