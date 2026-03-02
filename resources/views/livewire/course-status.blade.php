@@ -38,9 +38,9 @@
            @else
                 <div class="relative rounded-lg overflow-hidden shadow-lg border border-gray-200">
                     <figure>
-                        <img 
-                            class="w-full aspect-video object-cover object-center transition-transform duration-300 hover:scale-105" 
-                            src="{{$current->image}}" 
+                        <img
+                            class="w-full aspect-video object-cover object-center transition-transform duration-300 hover:scale-105"
+                            src="{{$current->image}}"
                             alt="Imagen de la lección {{$current->name}}"
                             loading="lazy"
                         >
@@ -49,7 +49,7 @@
                         <p class="text-white text-lg font-semibold mb-4 drop-shadow">
                             Para acceder a este contenido debes adquirir el curso
                         </p>
-                        <a 
+                        <a
                             href="{{ route('courses.show', $course) }}"
                             class="inline-block px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded shadow transition"
                         >
@@ -59,7 +59,7 @@
                 </div>
            @endif
 
-            
+
 
 
 
@@ -97,8 +97,8 @@
 
         </div>
 
-        <aside class="col-span-1">
-                <div class="card">
+        <div class="col-span-1">
+                <div class="card mb-4">
                     <h1 class="text-2xl font-bold leading-8 text-center text-gray-800 mt-4">
                         <a class="hover:text-blue-600" href="{{route('courses.show', $course)}}">
                             {{$course->title}}
@@ -118,7 +118,7 @@
 
 
 
-                    </div>
+                </div>
 
                 {{-- Avance --}}
 
@@ -137,37 +137,112 @@
                     </div>
                 </div>
 
-                {{-- secciones --}}
-                @foreach ($sections as $section)
-                    <li x-data="{ open: '{{$section['id'] == $current->section_id}}' }" class="mb-4">
-                        <button x-on:click="open = !open" class="text-left flex justify-between">
-                            <span>
-                                {{$section['name']}}
-                            </span>
+                    {{-- secciones --}}
+                    @foreach ($sections as $section)
+                        <li x-data="{ open: '{{$section['id'] == $current->section_id}}' }" class="mb-4">
+                            <button x-on:click="open = !open" class="text-left flex justify-between">
+                                <span>
+                                    {{$section['name']}}
+                                </span>
 
-                            <i class="mt-1 fas"  x-bind:class="open ? 'fa-angle-up' : 'fa-angle-down'"></i>
-                        </button>
+                                <i class="mt-1 fas"  x-bind:class="open ? 'fa-angle-up' : 'fa-angle-down'"></i>
+                            </button>
 
-                        <ul class="space-y-1 mt-2" x-show="open" x-cloak>
-                            @foreach ($section['lessons'] as $lesson)
-                            <li >
-                                <a href="{{route('courses.status', [$course, $lesson['slug']])}}" class="w-full flex">
-                                    <i class="fa-solid {{$lesson['id'] == $current->id ? 'fa-circle-dot' : 'fa-circle' }}  mt-1 mr-2 {{ $open_lessons->where('lesson_id', $lesson['id'])->where('user_id', auth()->id())->where('completed', 1)->count() ? 'text-yellow-500' : '' }}"></i>
+                            <ul class="space-y-1 mt-2" x-show="open" x-cloak>
+                                @foreach ($section['lessons'] as $lesson)
+                                <li >
+                                    <a href="{{route('courses.status', [$course, $lesson['slug']])}}" class="w-full flex">
+                                        <i class="fa-solid {{$lesson['id'] == $current->id ? 'fa-circle-dot' : 'fa-circle' }}  mt-1 mr-2 {{ $open_lessons->where('lesson_id', $lesson['id'])->where('user_id', auth()->id())->where('completed', 1)->count() ? 'text-yellow-500' : '' }}"></i>
 
-                                    <span>
-                                        {{$lessons->pluck('id')->search($lesson['id']) + 1 }}. {{$lesson['name']}}
-                                    </span>
-                                </a>
-                            </li>
-                            @endforeach
-                        </ul>
+                                        <span>
+                                            {{$lessons->pluck('id')->search($lesson['id']) + 1 }}. {{$lesson['name']}}
+                                        </span>
+                                    </a>
+                                </li>
+                                @endforeach
+                            </ul>
 
 
-                    </li>
-                @endforeach
-                </div>
-        </aside>
+                        </li>
+                    @endforeach
+                    </div>
+            @can('review_enabled', $course)
+
+
+            <x-button
+                wire:click="$set('review.open', true)"
+                class="w-full flex items-center justify-center">
+                Calificar este Curso
+            </x-button>
+        @endcan
     </div>
+
+
+    </div>
+
+    {{-- Modal review --}}
+
+    <x-dialog-modal wire:model="review.open">
+        <x-slot name="title">
+            <p class="text-3xl font-semibold text-center text-gray-800 mt-4">
+                !Tu opinion es importante para nosotros!
+            </p>
+        </x-slot>
+
+        <x-slot name="content">
+            <p class="text-gray-600 text-center mb-4">
+                Por favor, califica el curso y déjanos un comentario para mejorar nuestros contenidos.
+            </p>
+
+            <ul x-data="{
+                    rating: @entangle('review.rating')
+                }"
+
+                class="flex justify-center space-x-3">
+                    <li>
+                        <button x-on:click="rating = 1">
+                            <i  class="fas fa-star text-2xl" x-bind:class="rating>= 1 ? 'text-yellow-500' : '' "></i>
+                        </button>
+                    </li>
+                <li>
+                    <button x-on:click="rating = 2">
+                        <i  class="fas fa-star text-2xl" x-bind:class="rating>= 2 ? 'text-yellow-500' : '' "></i>
+                    </button>
+                </li>
+                <li>
+                    <button x-on:click="rating = 3">
+                        <i  class="fas fa-star text-2xl" x-bind:class="rating>= 3 ? 'text-yellow-500' : '' "></i>
+                    </button>
+                </li>
+                <li>
+                    <button x-on:click="rating = 4">
+                        <i  class="fas fa-star text-2xl" x-bind:class="rating>= 4 ? 'text-yellow-500' : '' "></i>
+                    </button>
+                </li>
+                <li>
+                    <button x-on:click="rating = 5">
+                        <i  class="fas fa-star text-2xl" x-bind:class="rating>= 5 ? 'text-yellow-500' : '' "></i>
+                    </button>
+                </li>
+            </ul>
+
+            <x-textarea wire:model="review.comment" class="w-full mt-4" placeholder="Deja tu comentario aquí...">
+
+            </x-textarea>
+
+        </x-slot>
+
+        <x-slot name="footer">
+            <x-button wire:click="storeReview">
+                Enviar Calificación
+            </x-button>
+
+        </x-slot>
+
+
+
+    </x-dialog-modal>
+
 
     @push('js')
             <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
@@ -181,7 +256,7 @@
             player.on('ended', event => {
                 @this.call('completeLesson');
             });
-            
+
 
         </script>
     @endpush
