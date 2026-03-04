@@ -35,6 +35,9 @@ class DatabaseSeeder extends Seeder
             LevelSeeder::class,
             CourseSeeder::class,
             // Add other seeders here
+
+            PermissionSeeder::class,
+            RoleSeeder::class,
         ]);
 
     }
