@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\CourseStatus;
+use Illuminate\Container\Attributes\DB;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
@@ -51,6 +52,17 @@ protected function image(): Attribute
         }
     );
 }
+
+protected function rating(): Attribute
+{
+    return new Attribute(
+        get: function()
+        {
+            return $this->reviews->count() ? round($this->reviews->avg('rating'), 2): 5;
+        }
+    );
+}
+
     //Relacion muchos a uno
     public function teacher()
     {
@@ -88,6 +100,11 @@ protected function image(): Attribute
     public function sections()
     {
         return $this->hasMany(Section::class);
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
     }
 
     //Relacion muchos a muchos
